@@ -143,25 +143,6 @@
         ]
       },
       {
-        "__if": "services.easynews or services.nzbdav or services.altmount or services.stremio_nntp or services.stremthru_newz or services.aiostreams",
-        "id": "protectNZBatlas",
-        "name": "حماية نتائج اندكسر اطلس من التصفية",
-        "description": "اختر نعم لتمرير أول نتيجتين من اندكسر اطلس مع تجاوز تصفية العنوان والاستبعاد وإزالة التكرار واللغة وحدود النتائج، أو لا لترك التصفية المعتادة دون إضافة شرط. ملاحظة: سمّ الاندكسر باسم NZBatlas بالضبط حتى تتم مطابقة نتائجه.",
-        "type": "select",
-        "required": true,
-        "default": "no",
-        "options": [
-          {
-            "value": "yes",
-            "label": "نعم"
-          },
-          {
-            "value": "no",
-            "label": "لا"
-          }
-        ]
-      },
-      {
         "id": "coreFilter",
         "name": "محرك البحث: عدد النتائج",
         "description": "القيمة الافتراضية هي ٣، وتعطي تقريبًا من ٣ إلى ٥ نتائج لكل دقة وجودة، أي ما يقارب ١٥ إلى ٢٠ مصدرًا إجمالًا. نتائج اليوزنت منفصلة، وستعطيك من ١٥ إلى ٢٠ مصدرًا أيضًا. أدخل صفر لتعطيله",
@@ -206,6 +187,25 @@
           {
             "value": "fast",
             "label": "السريع: بحث ديناميكي بحد ٣.٥ ثواني"
+          }
+        ]
+      },
+      {
+        "__if": "services.easynews or services.nzbdav or services.altmount or services.stremio_nntp or services.stremthru_newz or services.aiostreams",
+        "id": "protectNZBatlas",
+        "name": "حماية نتائج اندكسر اطلس من التصفية",
+        "description": "اختر نعم لتمرير أول نتيجتين من اندكسر اطلس، أو لا لترك التصفية المعتادة دون إضافة شرط. ملاحظة: سمّ الاندكسر باسم NZBatlas بالضبط حتى تتم مطابقة نتائجه.",
+        "type": "select",
+        "required": false,
+        "default": "yes",
+        "options": [
+          {
+            "value": "yes",
+            "label": "نعم"
+          },
+          {
+            "value": "no",
+            "label": "لا"
           }
         ]
       }
@@ -808,36 +808,21 @@
               "category": "Streams"
             },
             {
-              "type": "meteor",
-              "instanceId": "064",
+              "__if": "inputs.penguPlayUrlNoDebrid",
+              "type": "penguplay",
+              "instanceId": "13d",
               "enabled": true,
               "options": {
-                "name": "Meteor",
+                "name": "PenguPlay",
+                "manifestUrl": "{{inputs.penguPlayUrlNoDebrid}}",
                 "timeout": 5000,
                 "resources": [
-                  "stream"
+                  "stream",
+                  "subtitles",
+                  "meta",
+                  "catalog"
                 ],
-                "includeP2P": true,
-                "removeTrash": false,
-                "useMultipleInstances": false,
                 "mediaTypes": []
-              },
-              "category": "Streams"
-            },
-            {
-              "type": "comet",
-              "instanceId": "b0f",
-              "enabled": true,
-              "options": {
-                "name": "Comet",
-                "timeout": 5000,
-                "resources": [
-                  "stream"
-                ],
-                "includeP2P": true,
-                "removeTrash": false,
-                "mediaTypes": [],
-                "url": ""
               },
               "category": "Streams"
             },
@@ -881,6 +866,40 @@
                 "mediaTypes": [],
                 "useMultipleInstances": false,
                 "url": "https://sooti.info"
+              },
+              "category": "Streams"
+            },
+            {
+              "type": "meteor",
+              "instanceId": "064",
+              "enabled": true,
+              "options": {
+                "name": "Meteor",
+                "timeout": 5000,
+                "resources": [
+                  "stream"
+                ],
+                "includeP2P": true,
+                "removeTrash": false,
+                "useMultipleInstances": false,
+                "mediaTypes": []
+              },
+              "category": "Streams"
+            },
+            {
+              "type": "comet",
+              "instanceId": "b0f",
+              "enabled": true,
+              "options": {
+                "name": "Comet",
+                "timeout": 5000,
+                "resources": [
+                  "stream"
+                ],
+                "includeP2P": true,
+                "removeTrash": false,
+                "mediaTypes": [],
+                "url": ""
               },
               "category": "Streams"
             },
@@ -947,25 +966,6 @@
               },
               "category": "SUBS",
               "__if": "inputs.subtitleAddons == yes"
-            },
-            {
-              "__if": "inputs.penguPlayUrlNoDebrid",
-              "type": "penguplay",
-              "instanceId": "13d",
-              "enabled": true,
-              "options": {
-                "name": "PenguPlay",
-                "manifestUrl": "{{inputs.penguPlayUrlNoDebrid}}",
-                "timeout": 5000,
-                "resources": [
-                  "stream",
-                  "subtitles",
-                  "meta",
-                  "catalog"
-                ],
-                "mediaTypes": []
-              },
-              "category": "Streams"
             }
           ]
         },
